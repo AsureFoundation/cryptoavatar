@@ -1,12 +1,7 @@
-const Eth = require('ethjs');
-const utils = require('./utils');
+const ethUtils = require('ethjs-util');
+const eth = require('./eth');
 const ipfs = require('./ipfs');
-
-const eth = new Eth(window.web3.currentProvider);
-
-eth.getBlockByNumber('latest', true, (err, block) => {
-  console.log(err, block);
-});
+const utils = require('./utils');
 
 async function renderImage() {
   const file = this.files[0];
@@ -17,7 +12,14 @@ async function renderImage() {
 }
 
 async function uploadImage() {
-  ipfs.uploadFileToIpfs(imageViewer.file);
+  const hash = await ipfs.uploadFileToIpfs(imageViewer.file);
+
+  const cryptoAvatar = await eth.createCryptoAvatar();
+
+  console.log('sending');
+
+  const result = await cryptoAvatar.setAvatar(ethUtils.fromAscii(hash));
+  console.log(result);
 }
 
 const fileInput = document.getElementById('fileInput');

@@ -13,8 +13,7 @@ async function uploadFileToIpfs(file) {
   const ipfs = new IPFS('ipfs.infura.io', '5001', { protocol: 'https' });
   const res = await ipfs.files.add(content);
 
-  console.log(res);
-  return res.hash;
+  return res[0].hash;
 }
 
 module.exports = {

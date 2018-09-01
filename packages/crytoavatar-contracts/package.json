@@ -1,0 +1,22 @@
+{
+  "name": "crytoavatar-contracts",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "ganache": "ganache-cli --mnemonic \"harsh wild kitchen defense nephew breeze cannon couple unknown endless render harbor\"",
+    "build": "truffle compile",
+    "migrate": "truffle migrate --reset --network development",
+    "test": "truffe test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ganache-cli": "^6.1.8",
+    "truffle": "^5.0.0-beta.0"
+  }
+}
