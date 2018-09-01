@@ -1,5 +1,5 @@
 const Eth = require('ethjs');
-const CryptoAvatarData = require('crytoavatar-contracts').CryptoAvatarData;
+const CryptoAvatarData = require('cryptoavatar-contracts').CryptoAvatarData;
 
 async function createCryptoAvatar() {
   const eth = new Eth(window.web3.currentProvider);

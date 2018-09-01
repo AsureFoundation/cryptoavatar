@@ -1,5 +1,5 @@
 {
-  "name": "crytoavatar-dapp",
+  "name": "cryptoavatar-dapp",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "cropperjs": "^1.4.1",
-    "crytoavatar-contracts": "*",
+    "cryptoavatar-contracts": "*",
     "ethjs": "^0.4.0",
     "ethjs-util": "^0.1.6",
     "ipfs-api": "^24.0.1"
