@@ -18,7 +18,14 @@ function readFileAsArrayBuffer(file) {
   });
 }
 
+function canvasToBlob(canvas) {
+  return new Promise(resolve => {
+    canvas.toBlob(resolve);
+  });
+}
+
 module.exports = {
   readFileAsDataURL,
-  readFileAsArrayBuffer
+  readFileAsArrayBuffer,
+  canvasToBlob
 };

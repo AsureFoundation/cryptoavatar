@@ -1,9 +1,9 @@
 const ethUtils = require('ethjs-util');
+const Cropper = require('cropperjs').default;
 const eth = require('./eth');
 const ipfs = require('./ipfs');
 const utils = require('./utils');
 
-const fileInput = document.getElementById('fileInput');
 const upload = document.getElementById('upload');
 const imageViewer = document.getElementById('imageViewer');
 
@@ -24,18 +24,46 @@ async function loadImage() {
 async function renderImage() {
   const file = this.files[0];
 
+  if (imageViewer.cropper) {
+    imageViewer.cropper.destroy();
+  }
+
   imageViewer.file = file;
   imageViewer.src = await utils.readFileAsDataURL(file);
+
+  imageViewer.cropper = new Cropper(imageViewer, {
+    viewMode: 1,
+    dragMode: 'move',
+    aspectRatio: 1,
+    minCropBoxWidth: 460,
+    minCropBoxHeight: 460,
+    autoCropArea: 0.65,
+    restore: false,
+    guides: false,
+    center: false,
+    highlight: false,
+    cropBoxMoveable: false,
+    cropBoxResizable: false,
+    toggleDragModeOnDblclick: false
+  });
 }
 
 async function uploadImage() {
-  const hash = await ipfs.uploadFileToIpfs(imageViewer.file);
+  if (!imageViewer.cropper) {
+    return false;
+  }
 
+  const croppedFile = await utils.canvasToBlob(
+    imageViewer.cropper.getCroppedCanvas()
+  );
+
+  const hash = await ipfs.uploadFileToIpfs(croppedFile);
   const cryptoAvatar = await eth.createCryptoAvatar();
 
   console.log('sending');
   const result = await cryptoAvatar.setAvatar(ethUtils.fromAscii(hash));
   console.log(result);
+  return true;
 }
 
 fileInput.addEventListener('change', renderImage, false);
